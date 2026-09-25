@@ -3,11 +3,59 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Services | Seevika Technologies</title>
-<meta name="description" content="Cloud infrastructure, CI/CD and automation, security and compliance, observability, platform engineering and consulting from Seevika Technologies.">
+<title>DevOps Consulting &amp; Cloud Services | Seevika Technologies</title>
+<meta name="description" content="DevOps consulting, cloud infrastructure, CI/CD automation, DevSecOps, MLOps and site reliability engineering services from Seevika Technologies.">
 <link rel="canonical" href="https://seevika.com/services.html">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="styles.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is the difference between DevOps consulting and managed DevOps services?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Consulting is advisory: we assess what you have, design the approach, select tooling and help you decide what to build. Managed services are operational: ongoing responsibility for running the platform, maintaining pipelines, handling incidents and continuously improving it. Most engagements start as consulting and move to managed once the foundation is stable." }
+    },
+    {
+      "@type": "Question",
+      "name": "How long does a typical DevOps transformation take?",
+      "acceptedAnswer": { "@type": "Answer", "text": "It depends on what exists already. A single pipeline or landing zone is often weeks. A full platform transformation across multiple teams and environments is typically months, and is better delivered in phases than as one big-bang programme." }
+    },
+    {
+      "@type": "Question",
+      "name": "Do we need Kubernetes?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Often no. Kubernetes is a significant operational commitment, and for many workloads managed platforms, serverless or plain infrastructure as code are the better answer." }
+    },
+    {
+      "@type": "Question",
+      "name": "Who owns the code and infrastructure you write?",
+      "acceptedAnswer": { "@type": "Answer", "text": "You do, without exception. Work lands in your repositories, under your cloud accounts, with your licences. We do not depend on ongoing fees for you to keep operating what we built." }
+    },
+    {
+      "@type": "Question",
+      "name": "Can you help with compliance frameworks like ISO 27001 or SOC 2?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes. We build the technical controls and automate the evidence collection these frameworks require, working alongside whoever runs your formal audit. We engineer the controls and evidence, we are not the body that certifies you." }
+    },
+    {
+      "@type": "Question",
+      "name": "What does an engagement cost?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Assessments are typically a fixed fee with a defined scope. Delivery work is scoped and priced against a defined outcome, and ongoing managed work is priced monthly. We give you a real number after understanding the environment." }
+    },
+    {
+      "@type": "Question",
+      "name": "Do you work remotely?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes. We work remotely as standard and collaborate in your repositories, your chat and your tooling. On-site attendance can be arranged where it genuinely helps." }
+    },
+    {
+      "@type": "Question",
+      "name": "What would you need from us to get started?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Read access to the systems in question, someone technical who can answer questions, and honesty about constraints. A first conversation is useful, but it is not a prerequisite for us looking at the problem." }
+    }
+  ]
+}
+</script>
 </head>
 <body>
 
@@ -24,33 +72,488 @@
   </div>
 </header>
 
-<section class="hero" style="padding:72px 0 64px">
+<section class="hero" style="padding:76px 0 68px">
   <div class="wrap">
-    <h1 style="max-width:22ch">Services</h1>
-    <p class="lede">Six areas where most platform problems actually live. Pick one, or start with an assessment and let the priorities come from evidence.</p>
+    <p class="eyebrow" style="color:var(--accent)">DevOps consulting</p>
+    <h1 style="max-width:20ch">DevOps and cloud services that hold up under load</h1>
+    <p class="lede">From infrastructure management to SRE, MLOps and full CI/CD delivery. We build the pipelines, platforms and controls that let your team ship quickly without taking on avoidable risk.</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="contact.html">Request a consultation</a>
+      <a class="btn btn-ghost" href="#engagement">Engagement models</a>
+    </div>
   </div>
 </section>
 
 <section>
   <div class="wrap">
-    <div class="split">
-      <div class="prose">
-        <p class="eyebrow">01</p>
-        <h2>Cloud Infrastructure</h2>
-        <p>Environments that are predictable to build, cheap to run and safe to change. We start from your actual requirements rather than a reference architecture that works for everyone except you.</p>
-        <ul>
-          <li>Landing zones, account structure and network segmentation</li>
-          <li>Kubernetes cluster design, build and upgrade lifecycle</li>
-          <li>Storage, backup, retention and tested recovery</li>
-          <li>Cost review and rightsizing</li>
-        </ul>
+    <div class="section-head center">
+      <p class="eyebrow">Service catalogue</p>
+      <h2>What we do</h2>
+      <p>Eight practice areas covering the full path from commit to production, and the platform underneath it.</p>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <div class="icon">&#9635;</div>
+        <h3>Infrastructure Management</h3>
+        <p>Day-to-day operation of your cloud estate, defined as code and kept in a known state.</p>
       </div>
       <div class="card">
-        <h3>Typical outcomes</h3>
+        <div class="icon">&#9881;</div>
+        <h3>CI/CD Automation</h3>
+        <p>Pipelines that build, test, scan and deploy automatically, with rollback built in.</p>
+      </div>
+      <div class="card">
+        <div class="icon">&#128279;</div>
+        <h3>Cloud Management</h3>
+        <p>Account structure, networking, cost control and governance across your cloud provider.</p>
+      </div>
+      <div class="card">
+        <div class="icon">&#128737;</div>
+        <h3>DevSecOps</h3>
+        <p>Security controls and compliance evidence integrated into the delivery path itself.</p>
+      </div>
+      <div class="card">
+        <div class="icon">&#128200;</div>
+        <h3>Site Reliability Engineering</h3>
+        <p>Reliability targets, SLOs, on-call design and the engineering work to actually hit them.</p>
+      </div>
+      <div class="card">
+        <div class="icon">&#129302;</div>
+        <h3>MLOps</h3>
+        <p>Reproducible model training, versioning and deployment alongside the rest of your stack.</p>
+      </div>
+      <div class="card">
+        <div class="icon">&#128218;</div>
+        <h3>Platform Engineering</h3>
+        <p>Internal developer platforms, golden paths and self-service that remove ticket queues.</p>
+      </div>
+      <div class="card">
+        <div class="icon">&#128266;</div>
+        <h3>Strategy &amp; Advisory</h3>
+        <p>Independent assessment and a prioritised roadmap you can execute without us.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="automation">
+  <div class="wrap">
+    <div class="split">
+      <div class="prose">
+        <p class="eyebrow">01 &middot; CI/CD</p>
+        <h2>Continuous integration and delivery</h2>
+        <p>The point of a pipeline is that deploying becomes an unremarkable event. We build pipelines where every change is built, tested, scanned and gated automatically, so the only decision left is whether the code is good, not whether the process works.</p>
+        <p>We start by measuring where time actually goes between commit and production, then remove the slowest parts first. That usually means fixing pipeline design and test feedback loops long before anyone needs a new tool.</p>
+      </div>
+      <div>
+        <div class="card">
+          <h3>What we deliver</h3>
+          <ul>
+            <li>Pipeline architecture and quality gates</li>
+            <li>Automated test, build and scan stages</li>
+            <li>Release strategies: rolling, blue/green, canary</li>
+            <li>Progressive delivery and automated rollback</li>
+            <li>Reusable pipeline libraries and templates</li>
+            <li>Lead-time and deployment-frequency measurement</li>
+          </ul>
+        </div>
+        <div class="card" style="margin-top:14px">
+          <h3>Outcomes</h3>
+          <ul>
+            <li>Deploys that are small, frequent and reversible</li>
+            <li>Fast, trustworthy feedback on every change</li>
+            <li>A complete audit trail generated automatically</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="infrastructure">
+  <div class="wrap">
+    <div class="split">
+      <div class="prose">
+        <p class="eyebrow">02 &middot; Infrastructure</p>
+        <h2>Infrastructure as code and management</h2>
+        <p>Infrastructure that was clicked together by hand is infrastructure nobody can safely change. Everything we touch ends up in version control, reviewable like application code, and reproducible from a clean account.</p>
+        <p>Alongside that sits the operational work: patching, capacity, backups, and the unglamorous maintenance that decides whether a platform is a foundation or a liability.</p>
+      </div>
+      <div>
+        <div class="card">
+          <h3>What we deliver</h3>
+          <ul>
+            <li>Terraform / IaC modules and state management</li>
+            <li>Landing zones, account structure, network design</li>
+            <li>Kubernetes cluster build and lifecycle</li>
+            <li>Backup, retention and rehearsed recovery</li>
+            <li>Capacity planning and cost rightsizing</li>
+            <li>Patch management and routine operations</li>
+          </ul>
+        </div>
+        <div class="card" style="margin-top:14px">
+          <h3>Outcomes</h3>
+          <ul>
+            <li>Environments created from code, not from memory</li>
+            <li>Documented RTO and RPO you have actually tested</li>
+            <li>Lower spend without service degradation</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="devsecops">
+  <div class="wrap">
+    <div class="split">
+      <div class="prose">
+        <p class="eyebrow">03 &middot; DevSecOps</p>
+        <h2>Security and compliance in the delivery path</h2>
+        <p>Security bolted on after a release is expensive and always incomplete. We put controls where the work already happens, so scanning, policy enforcement and evidence collection happen automatically every time something ships.</p>
+        <p>Where compliance is the driver, the goal is to make the evidence a by-product of normal engineering rather than a separate project competing for the same weeks.</p>
+        <div class="badges">
+          <span class="badge"><span class="dot"></span>ISO 27001</span>
+          <span class="badge"><span class="dot"></span>SOC 2</span>
+          <span class="badge"><span class="dot"></span>GDPR</span>
+          <span class="badge"><span class="dot"></span>HIPAA</span>
+          <span class="badge"><span class="dot"></span>Cyber Essentials</span>
+          <span class="badge"><span class="dot"></span>PCI DSS</span>
+        </div>
+      </div>
+      <div>
+        <div class="card">
+          <h3>What we deliver</h3>
+          <ul>
+            <li>Container image and dependency scanning</li>
+            <li>Policy-as-code and admission control</li>
+            <li>Secrets management and rotation strategy</li>
+            <li>Least-privilege IAM and access reviews</li>
+            <li>SBOM generation and supply-chain integrity</li>
+            <li>Automated audit evidence collection</li>
+          </ul>
+        </div>
+        <div class="card" style="margin-top:14px">
+          <h3>Outcomes</h3>
+          <ul>
+            <li>Findings remediated at source, not triaged repeatedly</li>
+            <li>Continuous evidence instead of an annual scramble</li>
+            <li>A defensible answer to &ldquo;how do you know?&rdquo;</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="sre">
+  <div class="wrap">
+    <div class="split">
+      <div class="prose">
+        <p class="eyebrow">04 &middot; SRE</p>
+        <h2>Site reliability engineering</h2>
+        <p>Reliability is an engineering discipline with numbers attached, not a personality trait. We define service-level objectives, instrument the services that matter, and design on-call rotations that people can survive.</p>
+        <p>Where reliability genuinely requires it, we introduce controlled failure testing to find out where the system actually breaks, rather than assuming.</p>
+      </div>
+      <div>
+        <div class="card">
+          <h3>What we deliver</h3>
+          <ul>
+            <li>SLO and error-budget definition</li>
+            <li>Metrics, logs and distributed tracing</li>
+            <li>Alerting tuned for actionability, not volume</li>
+            <li>On-call process, escalation and runbooks</li>
+            <li>Incident review and postmortem practice</li>
+            <li>Load, resilience and chaos testing</li>
+          </ul>
+        </div>
+        <div class="card" style="margin-top:14px">
+          <h3>Outcomes</h3>
+          <ul>
+            <li>Fewer pages, and the remaining ones matter</li>
+            <li>Incidents diagnosed from telemetry, not guesswork</li>
+            <li>Reliability targets agreed and genuinely measured</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="cloud">
+  <div class="wrap">
+    <div class="split">
+      <div class="prose">
+        <p class="eyebrow">05 &middot; Cloud</p>
+        <h2>Cloud management and optimisation</h2>
+        <p>Cloud spend grows quietly and infrastructure sprawl compounds. We help you get a structure you can reason about, with costs that are visible and attributable rather than a single surprising invoice.</p>
+        <p>We work with the major providers, and we will tell you when the honest answer is that you are on the wrong service or the wrong size entirely.</p>
+      </div>
+      <div>
+        <div class="card">
+          <h3>What we deliver</h3>
+          <ul>
+            <li>Account, subscription and project structure</li>
+            <li>Networking: VPC, DNS, routing, interconnects</li>
+            <li>Identity, access and governance</li>
+            <li>Cost visibility, tagging and allocation</li>
+            <li>Rightsizing and commitment planning</li>
+            <li>Architecture review and migration planning</li>
+          </ul>
+        </div>
+        <div class="card" style="margin-top:14px">
+          <h3>Outcomes</h3>
+          <ul>
+            <li>Costs attributed to the teams that cause them</li>
+            <li>Governance that developers work with, not around</li>
+            <li>No surprise renewals or runaway resources</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="mlops">
+  <div class="wrap">
+    <div class="split">
+      <div class="prose">
+        <p class="eyebrow">06 &middot; MLOps</p>
+        <h2>Machine learning operations</h2>
+        <p>A model that cannot be reproduced is not in production, it is a rumour. We build the pipeline around versioned data, versioned code, tracked experiments and a deployment path for models that behaves like any other artefact.</p>
+      </div>
+      <div>
+        <div class="card">
+          <h3>What we deliver</h3>
+          <ul>
+            <li>Reproducible training and experiment tracking</li>
+            <li>Data and model versioning</li>
+            <li>Model serving and deployment automation</li>
+            <li>Feature stores and pipeline orchestration</li>
+            <li>Drift, bias and performance monitoring</li>
+            <li>GPU and compute cost management</li>
+          </ul>
+        </div>
+        <div class="card" style="margin-top:14px">
+          <h3>Outcomes</h3>
+          <ul>
+            <li>Anyone can rebuild a model from source</li>
+            <li>Rollback to a known-good model in minutes</li>
+            <li>Degradation caught before users notice it</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="platform">
+  <div class="wrap">
+    <div class="split">
+      <div class="prose">
+        <p class="eyebrow">07 &middot; Platform</p>
+        <h2>Platform engineering</h2>
+        <p>Platform teams exist to absorb work that every product team would otherwise repeat. We design internal platforms with a real support model and a real SLA, because an undocumented platform nobody is on call for is just another outage waiting to happen.</p>
+      </div>
+      <div>
+        <div class="card">
+          <h3>What we deliver</h3>
+          <ul>
+            <li>Internal developer portals and self-service</li>
+            <li>Service templates, scaffolding, golden paths</li>
+            <li>Environment and secret self-service</li>
+            <li>Platform SLAs and support model</li>
+            <li>Documentation treated as a maintained product</li>
+            <li>Developer experience measurement</li>
+          </ul>
+        </div>
+        <div class="card" style="margin-top:14px">
+          <h3>Outcomes</h3>
+          <ul>
+            <li>New services stood up in hours, not sprints</li>
+            <li>Infrastructure work done once, centrally</li>
+            <li>Developers shipping without deep platform knowledge</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="advisory">
+  <div class="wrap">
+    <div class="split">
+      <div class="prose">
+        <p class="eyebrow">08 &middot; Advisory</p>
+        <h2>Strategy, implementation and consulting</h2>
+        <p>Sometimes the most valuable thing is an independent read on what you already have. We assess the real system, not the diagram, and hand you findings and a roadmap ordered by risk and effort.</p>
+        <p>We are explicit when the answer is that you do not need something yet. A roadmap nobody can resource is worse than no roadmap, because it looks like progress.</p>
+      </div>
+      <div>
+        <div class="card">
+          <h3>What we deliver</h3>
+          <ul>
+            <li>Platform, pipeline and security assessments</li>
+            <li>DevOps maturity and capability reviews</li>
+            <li>Tooling selection and migration strategy</li>
+            <li>Architecture and technology due diligence</li>
+            <li>Organisational and skills-gap analysis</li>
+            <li>Prioritised now / next / later roadmap</li>
+          </ul>
+        </div>
+        <div class="card" style="margin-top:14px">
+          <h3>Outcomes</h3>
+          <ul>
+            <li>Written findings with severity and effort estimates</li>
+            <li>A plan sized for the capacity you actually have</li>
+            <li>No ongoing dependency on us to execute it</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="tools">
+  <div class="wrap">
+    <div class="section-head center">
+      <p class="eyebrow">Tooling</p>
+      <h2>Tools we work with</h2>
+      <p>We are tool-agnostic in principle and pragmatic in practice. These are what we reach for most often, chosen to fit the team you already have.</p>
+    </div>
+
+    <div style="max-width:860px;margin:0 auto">
+      <div class="pill-group">
+        <h4>Containers &amp; orchestration</h4>
+        <div class="pills">
+          <span class="pill">Kubernetes</span>
+          <span class="pill">Docker</span>
+          <span class="pill">Helm</span>
+          <span class="pill">Kustomize</span>
+          <span class="pill">EKS</span>
+          <span class="pill">AKS</span>
+          <span class="pill">GKE</span>
+        </div>
+      </div>
+      <div class="pill-group">
+        <h4>Infrastructure as code</h4>
+        <div class="pills">
+          <span class="pill">Terraform</span>
+          <span class="pill">OpenTofu</span>
+          <span class="pill">Pulumi</span>
+          <span class="pill">Ansible</span>
+          <span class="pill">AWS CloudFormation</span>
+        </div>
+      </div>
+      <div class="pill-group">
+        <h4>CI/CD</h4>
+        <div class="pills">
+          <span class="pill">GitHub Actions</span>
+          <span class="pill">GitLab CI</span>
+          <span class="pill">Jenkins</span>
+          <span class="pill">Argo CD</span>
+          <span class="pill">Flux</span>
+          <span class="pill">Harness</span>
+        </div>
+      </div>
+      <div class="pill-group">
+        <h4>Cloud</h4>
+        <div class="pills">
+          <span class="pill">AWS</span>
+          <span class="pill">Microsoft Azure</span>
+          <span class="pill">Google Cloud</span>
+          <span class="pill">Oracle Cloud</span>
+          <span class="pill">OpenStack</span>
+        </div>
+      </div>
+      <div class="pill-group">
+        <h4>Observability</h4>
+        <div class="pills">
+          <span class="pill">Prometheus</span>
+          <span class="pill">Grafana</span>
+          <span class="pill">OpenTelemetry</span>
+          <span class="pill">Loki</span>
+          <span class="pill">Jaeger</span>
+          <span class="pill">Datadog</span>
+        </div>
+      </div>
+      <div class="pill-group">
+        <h4>Security</h4>
+        <div class="pills">
+          <span class="pill">Trivy</span>
+          <span class="pill">Snyk</span>
+          <span class="pill">OWASP ZAP</span>
+          <span class="pill">Vault</span>
+          <span class="pill">OPA / Gatekeeper</span>
+          <span class="pill">Sigstore</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="engagement">
+  <div class="wrap">
+    <div class="section-head center">
+      <p class="eyebrow">Ways to work together</p>
+      <h2>Engagement models</h2>
+      <p>Most engagements start with an assessment and settle into one of these shapes. All of them keep your code, accounts and documentation under your control.</p>
+    </div>
+
+    <div class="grid">
+      <div class="engagement">
+        <h3>Advisory &amp; Assessment</h3>
+        <span class="for">Fixed scope &middot; Short</span>
+        <p>An independent review of what you have, with written findings and a prioritised roadmap.</p>
         <ul>
-          <li>Repeatable environment creation instead of hand-built ones</li>
-          <li>Documented, rehearsed recovery with known RTO/RPO</li>
-          <li>Reduced spend without service degradation</li>
+          <li>Fixed fee and fixed duration</li>
+          <li>You own every output</li>
+        </ul>
+      </div>
+      <div class="engagement">
+        <h3>Project Delivery</h3>
+        <span class="for">Scoped outcome</span>
+        <p>Build something specific: a pipeline, a landing zone, a migration, a platform.</p>
+        <ul>
+          <li>Defined scope and acceptance criteria</li>
+          <li>Delivered incrementally in your repos</li>
+        </ul>
+      </div>
+      <div class="engagement">
+        <h3>Build Operate Transfer</h3>
+        <span class="for">Build, run, then hand over</span>
+        <p>We build and operate the platform, transferring to your team with documentation as we go.</p>
+        <ul>
+          <li>Knowledge transfer built into delivery</li>
+          <li>Clean exit, planned from day one</li>
+        </ul>
+      </div>
+      <div class="engagement">
+        <h3>Managed Platform</h3>
+        <span class="for">Ongoing</span>
+        <p>Ongoing operational ownership of the platform, with an agreed scope and service level.</p>
+        <ul>
+          <li>Monitoring, patching and incident response</li>
+          <li>Continuous improvement, not just upkeep</li>
+        </ul>
+      </div>
+      <div class="engagement">
+        <h3>Staff Augmentation</h3>
+        <span class="for">Embedded</span>
+        <p>Experienced engineers working inside your team, your tools, your process, your standups.</p>
+        <ul>
+          <li>Flexible, scales with your roadmap</li>
+          <li>No handover burden</li>
+        </ul>
+      </div>
+      <div class="engagement">
+        <h3>Capability Centre</h3>
+        <span class="for">Long-term</span>
+        <p>A dedicated, small senior team owning a platform domain on a multi-year basis.</p>
+        <ul>
+          <li>Consistency and institutional knowledge</li>
+          <li>Costed against your actual capacity</li>
         </ul>
       </div>
     </div>
@@ -59,139 +562,87 @@
 
 <section class="alt">
   <div class="wrap">
-    <div class="split">
-      <div class="prose">
-        <p class="eyebrow">02</p>
-        <h2>CI/CD &amp; Automation</h2>
-        <p>Pipelines where a change reaching production is the expected outcome rather than an event. Fast feedback, small changes, and a rollback that anyone on the team can perform.</p>
-        <ul>
-          <li>Pipeline architecture, gates and quality checks</li>
-          <li>Infrastructure as Code modules and review standards</li>
-          <li>Release strategies: blue/green, canary, progressive</li>
-          <li>Reusable pipelines and self-service templates</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h3>Typical outcomes</h3>
-        <ul>
-          <li>Lead time from commit to production measured and falling</li>
-          <li>Deploys that are boring and reversible</li>
-          <li>Audit trail for every change automatically generated</li>
-        </ul>
-      </div>
+    <div class="section-head center">
+      <p class="eyebrow">Sectors</p>
+      <h2>Industries we work in</h2>
+      <p>Most platform problems are not industry-specific, but the constraints and the cost of getting them wrong are.</p>
+    </div>
+
+    <div class="industry-grid">
+      <div class="industry"><span>&#8226;</span>Financial services</div>
+      <div class="industry"><span>&#8226;</span>Healthcare &amp; life sciences</div>
+      <div class="industry"><span>&#8226;</span>Ecommerce &amp; retail</div>
+      <div class="industry"><span>&#8226;</span>SaaS &amp; software</div>
+      <div class="industry"><span>&#8226;</span>Telecommunications</div>
+      <div class="industry"><span>&#8226;</span>Media &amp; streaming</div>
+      <div class="industry"><span>&#8226;</span>Manufacturing &amp; logistics</div>
+      <div class="industry"><span>&#8226;</span>Public sector</div>
+      <div class="industry"><span>&#8226;</span>Education</div>
+      <div class="industry"><span>&#8226;</span>Professional services</div>
+      <div class="industry"><span>&#8226;</span>Energy &amp; utilities</div>
+      <div class="industry"><span>&#8226;</span>Startups &amp; scale-ups</div>
     </div>
   </div>
 </section>
 
-<section>
+<section id="faq">
   <div class="wrap">
-    <div class="split">
-      <div class="prose">
-        <p class="eyebrow">03</p>
-        <h2>Security &amp; Compliance</h2>
-        <p>Controls that live in the delivery path, so compliance evidence is a by-product of shipping software rather than a separate project nobody has time for.</p>
-        <ul>
-          <li>Container image and dependency scanning</li>
-          <li>Secrets management and rotation strategy</li>
-          <li>Policy as code and admission controls</li>
-          <li>Evidence collection for ISO 27001, SOC 2 and Cyber Essentials</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h3>Typical outcomes</h3>
-        <ul>
-          <li>Findings fixed at source instead of triaged repeatedly</li>
-          <li>Continuous evidence, not an annual scramble</li>
-          <li>Clear, defensible answer to "how do you know?"</li>
-        </ul>
-      </div>
+    <div class="section-head center">
+      <p class="eyebrow">FAQ</p>
+      <h2>Common questions</h2>
+      <p>The things people ask on a first call, answered without the sales pitch.</p>
     </div>
-  </div>
-</section>
 
-<section class="alt">
-  <div class="wrap">
-    <div class="split">
-      <div class="prose">
-        <p class="eyebrow">04</p>
-        <h2>Observability</h2>
-        <p>Instrumentation that tells you what users experienced, not just that a container exists. Designed around questions your on-call engineer needs answered at 3am.</p>
-        <ul>
-          <li>Metrics, logs and distributed tracing</li>
-          <li>Alerting tuned to be actionable rather than noisy</li>
-          <li>Service-level objectives and error budgets</li>
-          <li>Cost and capacity visibility</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h3>Typical outcomes</h3>
-        <ul>
-          <li>Fewer pages, and the pages that remain matter</li>
-          <li>Incidents diagnosed from telemetry, not guesswork</li>
-          <li>Reliability targets agreed and actually measured</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section>
-  <div class="wrap">
-    <div class="split">
-      <div class="prose">
-        <p class="eyebrow">05</p>
-        <h2>Platform Engineering</h2>
-        <p>Removing the ticket queue. Internal platforms exist so product teams can ship without waiting on infrastructure, and so infrastructure work is done once rather than per team.</p>
-        <ul>
-          <li>Developer portals and self-service workflows</li>
-          <li>Service templates, scaffolding and golden paths</li>
-          <li>Platform SLAs and support model definition</li>
-          <li>Documentation treated as a product</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h3>Typical outcomes</h3>
-        <ul>
-          <li>New services stood up in hours, not sprints</li>
-          <li>Platform work centralised and de-duplicated</li>
-          <li>Developers shipping without deep infra knowledge</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="alt">
-  <div class="wrap">
-    <div class="split">
-      <div class="prose">
-        <p class="eyebrow">06</p>
-        <h2>Consulting &amp; Audit</h2>
-        <p>An independent read on what you have now, with a plan you can execute in whatever capacity you actually have. We are explicit when the answer is "you don't need this yet".</p>
-        <ul>
-          <li>Platform, pipeline and security reviews</li>
-          <li>Reliability and readiness assessments</li>
-          <li>Technical due diligence for investors and acquisitions</li>
-          <li>Architecture and tooling recommendations</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h3>Typical outcomes</h3>
-        <ul>
-          <li>Written findings with severity and effort estimates</li>
-          <li>Prioritised roadmap separated into now/next/later</li>
-          <li>No dependency on us to keep executing it</li>
-        </ul>
-      </div>
+    <div class="faq">
+      <details>
+        <summary>What is the difference between DevOps consulting and managed DevOps services?</summary>
+        <p class="answer">Consulting is advisory: we assess what you have, design the approach, select tooling and help you decide what to build. Managed services are operational: ongoing responsibility for running the platform, maintaining pipelines, handling incidents and continuously improving it. Most engagements start as consulting and move to managed once the foundation is stable.</p>
+      </details>
+      <details>
+        <summary>How long does a typical DevOps transformation take?</summary>
+        <p class="answer">It depends entirely on what exists already, and anyone quoting a fixed timeline before understanding your environment is guessing. A single pipeline or landing zone is often weeks. A full platform transformation across multiple teams and environments is typically months, and is better delivered in phases than as one big-bang programme.</p>
+      </details>
+      <details>
+        <summary>Do we need Kubernetes?</summary>
+        <p class="answer">Often no. Kubernetes is a significant operational commitment, and for a lot of workloads managed platforms, serverless or plain infrastructure as code are the better answer. We will tell you if that is the case for your system, even though it is not always the more profitable recommendation for us.</p>
+      </details>
+      <details>
+        <summary>Will you work with our existing team and tools?</summary>
+        <p class="answer">Yes, and we prefer to. Replacing a toolchain that already works is rarely worth the disruption. We start with what you have, and only introduce something new where there is a concrete reason.</p>
+      </details>
+      <details>
+        <summary>Who owns the code and infrastructure you write?</summary>
+        <p class="answer">You do, without exception. Work lands in your repositories, under your cloud accounts, with your licences. We do not hold anything behind our own access, and we do not depend on ongoing fees for you to keep operating what we built.</p>
+      </details>
+      <details>
+        <summary>Can you help with compliance frameworks like ISO 27001 or SOC 2?</summary>
+        <p class="answer">Yes. We build the technical controls and automate the evidence collection these frameworks require, working alongside whoever runs your formal audit. Be aware of the distinction: we engineer the controls and the evidence, we are not the body that certifies you.</p>
+      </details>
+      <details>
+        <summary>What does an engagement cost?</summary>
+        <p class="answer">Assessments are typically a fixed fee with a defined scope. Delivery work is scoped and priced against a defined outcome, and ongoing managed work is priced monthly. We will give you a real number after understanding the environment, rather than a range designed to win the call.</p>
+      </details>
+      <details>
+        <summary>How do you handle incidents or urgent production problems?</summary>
+        <p class="answer">Stabilisation comes before improvement. If a system is down or degrading, we address that first and discuss the root cause afterwards. For clients on a managed agreement we operate an on-call rotation; for project work we agree response expectations up front.</p>
+      </details>
+      <details>
+        <summary>Do you work remotely?</summary>
+        <p class="answer">Yes. We work remotely as standard and collaborate in your repositories, your chat and your tooling. On-site attendance can be arranged where it genuinely helps, such as architecture workshops or handover periods.</p>
+      </details>
+      <details>
+        <summary>What would you need from us to get started?</summary>
+        <p class="answer">Read access to the systems in question, someone technical who can answer questions, and honesty about constraints. That is genuinely all. A first conversation is useful, but it is not a prerequisite for us looking at the problem.</p>
+      </details>
     </div>
   </div>
 </section>
 
 <section class="cta-band">
   <div class="wrap">
-    <h2>Not sure where to start?</h2>
-    <p>A short assessment gives you an independent, prioritised view of your platform. No obligation, and you keep the findings either way.</p>
-    <a class="btn btn-primary" href="contact.html">Request an assessment</a>
+    <h2>Start with a conversation</h2>
+    <p>Tell us what you are running, what is breaking, and what you want it to look like. You will get a straight answer about whether we are the right fit.</p>
+    <a class="btn btn-primary" href="contact.html">Book a consultation</a>
   </div>
 </section>
 
@@ -209,10 +660,14 @@
       </div>
       <div>
         <h4>Services</h4>
-        <a href="services.html">Cloud Infrastructure</a>
-        <a href="services.html">CI/CD &amp; Automation</a>
-        <a href="services.html">Security &amp; Compliance</a>
-        <a href="services.html">Observability</a>
+        <a href="services.html#automation">CI/CD Automation</a>
+        <a href="services.html#infrastructure">Infrastructure Management</a>
+        <a href="services.html#devsecops">DevSecOps</a>
+        <a href="services.html#sre">Site Reliability</a>
+        <a href="services.html#cloud">Cloud Management</a>
+        <a href="services.html#mlops">MLOps</a>
+        <a href="services.html#platform">Platform Engineering</a>
+        <a href="services.html#advisory">Advisory</a>
       </div>
       <div>
         <h4>Get in touch</h4>
