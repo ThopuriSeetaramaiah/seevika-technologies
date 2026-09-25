@@ -67,7 +67,6 @@
       <a href="index.html">Home</a>
       <a href="services.html" class="active">Services</a>
       <a href="insights.html">Insights</a>
-      <a href="scenarios.html">Scenarios</a>
       <a href="about.html">About</a>
       <a href="contact.html" class="cta">Get in touch</a>
     </nav>
@@ -587,6 +586,120 @@
   </div>
 </section>
 
+<section id="scenarios">
+  <div class="wrap">
+    <div class="section-head center">
+      <p class="eyebrow">In practice</p>
+      <h2>Typical scenarios</h2>
+      <p>The situations we are most often brought into. These describe recurring problem shapes rather than client case studies &mdash; the specifics of your system are what matter, but the shape of the problem is often recognisable.</p>
+    </div>
+
+    <div class="notice">
+      <strong>How to read these.</strong> Common scenarios and the approach we typically take, written to be useful before you talk to anyone. They are illustrative, not accounts of specific client engagements, and we have deliberately included no performance claims or outcome figures. What we can do is describe the problem honestly and tell you whether we are the right people to help.
+    </div>
+
+    <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(400px,1fr))">
+
+      <div class="scenario">
+        <div class="head">
+          <span class="tag">Delivery</span>
+          <h3>Deployments take all day and everyone is afraid of them</h3>
+        </div>
+        <div class="body">
+          <h4>The shape</h4>
+          <p>The pipeline takes hours, there is a manual approval chain nobody fully understands, and the last deployment of the week is the one that causes problems. The team batches changes to reduce exposure, which makes each deploy bigger and riskier.</p>
+          <h4>How we approach it</h4>
+          <p>Measure where the time actually goes before changing anything. Usually most of it is queueing rather than work: review waits, environment contention, and a single serial test suite. Then split the pipeline into stages that block at different points, so a formatting issue does not hold up a security scan.</p>
+          <h4>What usually shifts</h4>
+          <p>Deploys get smaller and more frequent because the cost of each one drops. The batching behaviour disappears on its own, because it was a response to the old constraints rather than a preference.</p>
+        </div>
+      </div>
+
+      <div class="scenario">
+        <div class="head">
+          <span class="tag">Platform</span>
+          <h3>Kubernetes was adopted and never finished</h3>
+        </div>
+        <div class="body">
+          <h4>The shape</h4>
+          <p>A cluster was stood up during a period of enthusiasm, a couple of workloads moved onto it, and nobody owns it. It is now on an out-of-support version, running workloads nobody understands, with the only record of the deployment process being a document in someone's drive.</p>
+          <h4>How we approach it</h4>
+          <p>Inventory before anything else. Find out what is actually running, what depends on what, and what the stateful components are. Then decide, workload by workload, whether each belongs on Kubernetes, on a managed container service, or somewhere simpler. Migrating off a platform is a real project and should be scoped as one.</p>
+          <h4>What usually shifts</h4>
+          <p>Whatever we choose, the outcome is a system someone actually owns, on a supported version, with a documented deployment path. That is worth more than any particular platform.</p>
+        </div>
+      </div>
+
+      <div class="scenario">
+        <div class="head">
+          <span class="tag">FinOps</span>
+          <h3>The cloud bill grew and nobody can explain why</h3>
+        </div>
+        <div class="body">
+          <h4>The shape</h4>
+          <p>Spend has grown faster than the business, cost is reported as a single number, and the first instinct is a blunt cost-cutting exercise that quietly breaks something. Development environments are left running. Storage grows without bound. Nobody owns the number.</p>
+          <h4>How we approach it</h4>
+          <p>Attribution first, reduction second. Without tagging and visibility, any saving is a guess and the same cost reappears next quarter. We get cost attributable to teams and environments, then address the largest categories: idle non-production capacity, storage with no lifecycle policy, and over-provisioned instance types.</p>
+          <h4>What usually shifts</h4>
+          <p>A number that is understood rather than merely smaller. That is what makes the saving hold, and it is usually the part the obvious approach skips.</p>
+        </div>
+      </div>
+
+      <div class="scenario">
+        <div class="head">
+          <span class="tag">Compliance</span>
+          <h3>An audit is coming and the evidence is in someone's inbox</h3>
+        </div>
+        <div class="body">
+          <h4>The shape</h4>
+          <p>A certification deadline approaches. Evidence that should be automatic is being assembled by hand into spreadsheets, taking weeks of somebody&rsquo;s time, and is out of date the moment it is submitted. Everyone dreads the follow-up audit more than the first one.</p>
+          <h4>How we approach it</h4>
+          <p>Most of the required evidence is a by-product of work you already do: every deploy produces a version, an approver, a timestamp, a test result and an artefact. We wire the pipeline to collect and store it continuously, then close the genuine technical gaps that the audit will otherwise find.</p>
+          <h4>What usually shifts</h4>
+          <p>The audit stops being a project and becomes a query. That is the whole objective, and it is a build exercise rather than a process exercise.</p>
+        </div>
+      </div>
+
+      <div class="scenario">
+        <div class="head">
+          <span class="tag">Reliability</span>
+          <h3>Alerts fire constantly and everybody has muted them</h3>
+        </div>
+        <div class="body">
+          <h4>The shape</h4>
+          <p>Monitoring was set up by adding anything that looked interesting. The result is hundreds of alerts, most of which are not actionable, so the on-call engineer has muted most of them. Meanwhile a genuine user-facing problem can be invisible because the alert that would have caught it was muted along with everything else.</p>
+          <h4>How we approach it</h4>
+          <p>Rebuild from user-visible symptoms downwards. Start with what customers actually experience, alert on that, then work backwards to the infrastructure signals that predict it. Delete everything that does not lead to a decision. Then test it by deliberately causing a problem and seeing whether the right person is told.</p>
+          <h4>What usually shifts</h4>
+          <p>Fewer alerts, and the ones that remain are worth waking someone for. The important change is that alert fatigue stops masking real incidents.</p>
+        </div>
+      </div>
+
+      <div class="scenario">
+        <div class="head">
+          <span class="tag">Developer experience</span>
+          <h3>New engineers take a month to ship anything</h3>
+        </div>
+        <div class="body">
+          <h4>The shape</h4>
+          <p>Getting a change into production needs access to eleven systems, knowledge held by two people, and a sequence of steps that exists only in someone's head. Every new hire is a month of shadowing, and every departure takes that knowledge with it.</p>
+          <h4>How we approach it</h4>
+          <p>Fix the path of least resistance rather than documenting the maze. Automate access provisioning, make the deploy path identical for every service, and put a service template in place so a new service is created rather than assembled. Then write the documentation that automation does not cover.</p>
+          <h4>What usually shifts</h4>
+          <p>Onboarding time, and the number of people who can deploy. Both are measurable, which makes the improvement easy to demonstrate to the people funding it.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="card" style="margin-top:34px">
+      <h3>What these have in common</h3>
+      <p>None of these are really tool problems. Every one has an ownership or visibility problem underneath it &mdash; the Kubernetes nobody owns, the bill nobody is accountable for, the alerts nobody trusts, the knowledge held by a single person.</p>
+      <p style="margin-bottom:0">Tools are the visible symptom, and buying a new one is the most satisfying response because it is the only option that does not require anyone to change how they work. It is also the option most likely to leave the underlying problem exactly where it was. That is why our assessments start with what actually exists and who is actually accountable, before recommending anything.</p>
+    </div>
+  </div>
+</section>
+
 <section id="faq">
   <div class="wrap">
     <div class="section-head center">
@@ -654,13 +767,13 @@
       <div>
         <a class="brand" href="index.html"><span class="mark">S</span> Seevika Technologies</a>
         <p style="margin:0;max-width:30ch">Cloud, DevOps and platform engineering for teams that need reliability.</p>
+        <p style="margin:14px 0 0"><a href="mailto:hello@seevika.com">hello@seevika.com</a></p>
       </div>
       <div>
         <h4>Company</h4>
         <a href="about.html">About</a>
         <a href="contact.html">Contact</a>
         <a href="insights.html">Insights</a>
-        <a href="scenarios.html">Scenarios</a>
       </div>
       <div>
         <h4>Services</h4>
@@ -674,8 +787,9 @@
         <a href="services.html#advisory">Advisory</a>
       </div>
       <div>
-        <h4>Get in touch</h4>
-        <a href="mailto:hello@seevika.com">hello@seevika.com</a>
+        <h4>Legal</h4>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Engagement</a>
       </div>
     </div>
     <div class="foot-bottom">
