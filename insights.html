@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Insights | Seevika Technologies</title>
+<meta name="description" content="Practical DevOps and cloud engineering writing from Seevika Technologies - DORA metrics, CI/CD maturity, Kubernetes trade-offs, IaC, incident response and DevSecOps.">
+<link rel="canonical" href="https://seevika.com/insights.html">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="index.html"><span class="mark">S</span> Seevika Technologies</a>
+    <button class="burger" aria-label="Toggle menu" onclick="document.querySelector('nav.links').classList.toggle('open')">&#9776;</button>
+        <nav class="links">
+      <a href="index.html">Home</a>
+      <a href="services.html">Services</a>
+      <a href="insights.html" class="active">Insights</a>
+      <a href="scenarios.html">Scenarios</a>
+      <a href="about.html">About</a>
+      <a href="contact.html" class="cta">Get in touch</a>
+    </nav>
+  </div>
+</header>
+
+<section class="page-head">
+  <div class="wrap">
+    <p class="eyebrow" style="color:var(--accent)">Knowledge base</p>
+    <h1>Notes on running software in production</h1>
+    <p class="lede">Written for engineers who have to make the decisions, not for people who need to be convinced they are important. No product marketing, no invented statistics.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="grid">
+
+      <a class="card" href="insights/dora-metrics.html" style="text-decoration:none;display:block">
+        <div class="icon">&#128200;</div>
+        <h3>DORA metrics, properly explained</h3>
+        <p>What the four metrics actually measure, which ones teams misuse, and how to read them without optimising for the scoreboard.</p>
+        <p style="margin-top:14px;font-size:0.83rem;color:var(--accent-dark);font-weight:650">8 min read</p>
+      </a>
+
+      <a class="card" href="insights/ci-cd-maturity.html" style="text-decoration:none;display:block">
+        <div class="icon">&#9881;</div>
+        <h3>The five stages of CI/CD maturity</h3>
+        <p>A model for working out which stage you are actually at, and what unblocking the next one really involves.</p>
+        <p style="margin-top:14px;font-size:0.83rem;color:var(--accent-dark);font-weight:650">7 min read</p>
+      </a>
+
+      <a class="card" href="insights/kubernetes-when.html" style="text-decoration:none;display:block">
+        <div class="icon">&#9635;</div>
+        <h3>Do you actually need Kubernetes?</h3>
+        <p>An honest look at the operational cost, and the workload shapes where a managed platform or plain infrastructure as code is the better answer.</p>
+        <p style="margin-top:14px;font-size:0.83rem;color:var(--accent-dark);font-weight:650">9 min read</p>
+      </a>
+
+      <a class="card" href="insights/terraform-state.html" style="text-decoration:none;display:block">
+        <div class="icon">&#128190;</div>
+        <h3>Terraform state will be the thing that breaks</h3>
+        <p>State is where infrastructure projects go wrong, and almost always in ways that are invisible until they are expensive. How to set it up properly.</p>
+        <p style="margin-top:14px;font-size:0.83rem;color:var(--accent-dark);font-weight:650">8 min read</p>
+      </a>
+
+      <a class="card" href="insights/incident-first-fifteen.html" style="text-decoration:none;display:block">
+        <div class="icon">&#128308;</div>
+        <h3>The first fifteen minutes of an incident</h3>
+        <p>What actually helps in the first quarter hour, what actively makes it worse, and why the instinct to find root cause is usually premature.</p>
+        <p style="margin-top:14px;font-size:0.83rem;color:var(--accent-dark);font-weight:650">6 min read</p>
+      </a>
+
+      <a class="card" href="insights/shift-left-security.html" style="text-decoration:none;display:block">
+        <div class="icon">&#128737;</div>
+        <h3>Shifting security left without stopping delivery</h3>
+        <p>How to put security controls into the delivery path so teams move faster, rather than bolting on a gate that becomes the reason people bypass it.</p>
+        <p style="margin-top:14px;font-size:0.83rem;color:var(--accent-dark);font-weight:650">7 min read</p>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="wrap">
+    <div class="section-head center">
+      <p class="eyebrow">Also worth reading</p>
+      <h2>Start with the FAQ</h2>
+      <p>The questions that come up on almost every first call, answered directly rather than deflected to a sales process.</p>
+    </div>
+    <div style="text-align:center">
+      <a class="btn btn-primary" href="services.html#faq">Read the FAQ</a>
+      <a class="btn btn-ghost" href="scenarios.html" style="margin-left:10px;background:#fff;color:var(--navy);border-color:var(--border)">See typical scenarios</a>
+    </div>
+  </div>
+</section>
+
+<section class="cta-band">
+  <div class="wrap">
+    <h2>Reading is not a substitute for looking</h2>
+    <p>These articles describe patterns that work in general. Your system is specific, and a short conversation about it is worth more than a year of reading.</p>
+    <a class="btn btn-primary" href="contact.html">Get in touch</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="index.html"><span class="mark">S</span> Seevika Technologies</a>
+        <p style="margin:0;max-width:30ch">Cloud, DevOps and platform engineering for teams that need reliability.</p>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="insights.html">Insights</a>
+        <a href="scenarios.html">Scenarios</a>
+      </div>
+      <div>
+        <h4>Services</h4>
+        <a href="services.html#automation">CI/CD Automation</a>
+        <a href="services.html#infrastructure">Infrastructure Management</a>
+        <a href="services.html#cloud">Cloud Management</a>
+        <a href="services.html#devsecops">DevSecOps</a>
+        <a href="services.html#sre">Site Reliability</a>
+        <a href="services.html#mlops">MLOps</a>
+        <a href="services.html#platform">Platform Engineering</a>
+        <a href="services.html#advisory">Advisory</a>
+      </div>
+      <div>
+        <h4>Get in touch</h4>
+        <a href="mailto:hello@seevika.com">hello@seevika.com</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>&copy; <span id="year">2026</span> Seevika Technologies. All rights reserved.</span>
+      <span>Cloud &middot; DevOps &middot; Platform Engineering</span>
+    </div>
+  </div>
+</footer>
+
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>

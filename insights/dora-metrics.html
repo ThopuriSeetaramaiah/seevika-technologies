@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DORA metrics, properly explained | Seevika Technologies</title>
+<meta name="description" content="What the four DORA metrics actually measure, which ones teams misuse, and how to read them without optimising for the scoreboard instead of shipping better software.">
+<link rel="canonical" href="https://seevika.com/insights/dora-metrics.html">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="../index.html"><span class="mark">S</span> Seevika Technologies</a>
+    <button class="burger" aria-label="Toggle menu" onclick="document.querySelector('nav.links').classList.toggle('open')">&#9776;</button>
+    <nav class="links">
+      <a href="../index.html">Home</a>
+      <a href="../services.html">Services</a>
+      <a href="../insights.html" class="active">Insights</a>
+      <a href="../about.html">About</a>
+      <a href="../contact.html" class="cta">Get in touch</a>
+    </nav>
+  </div>
+</header>
+
+<section class="page-head">
+  <div class="wrap">
+    <div class="crumbs"><a href="../index.html">Home</a> &rsaquo; <a href="../insights.html">Insights</a></div>
+    <h1>DORA metrics, properly explained</h1>
+    <p class="lede">The four metrics are useful. They are also very easy to quote in a way that tells you nothing. Here is what each one measures, and where teams go wrong with them.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="article-wrap">
+      <div class="meta">
+        <span><strong>Topic</strong> Measurement</span>
+        <span><strong>Audience</strong> Engineering leads, platform teams</span>
+        <span><strong>Reading time</strong> 8 minutes</span>
+      </div>
+
+      <div class="article-body">
+        <p>DevOps Research and Performance, now known as <strong>DORA</strong>, popularised four metrics intended to answer a deceptively simple question: is this engineering organisation actually getting better at delivering software?</p>
+        <p>They are the four below. The rest of this article is about the ways they get misused, because that is where most of the confusion comes from.</p>
+
+        <h2>The four metrics</h2>
+
+        <table>
+          <thead>
+            <tr><th>Metric</th><th>What it measures</th><th>Direction</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Deployment frequency</strong></td><td>How often production deploys happen</td><td>Higher is better</td></tr>
+            <tr><td><strong>Lead time for changes</strong></td><td>Time from commit to live in production</td><td>Lower is better</td></tr>
+            <tr><td><strong>Change failure rate</strong></td><td>Share of deploys causing a failure needing remediation</td><td>Lower is better</td></tr>
+            <tr><td><strong>Failed deployment recovery time</strong></td><td>Time to restore service after a bad deploy</td><td>Lower is better</td></tr>
+          </tbody>
+        </table>
+
+        <p>Note what is <em>not</em> on that list. There is no metric for number of tests, code coverage, lines of code, ticket throughput, or developer productivity. DORA deliberately measures outcomes, and the omission is the most important part of the model.</p>
+
+        <h2>Why these four work together</h2>
+
+        <p>Individually, each metric is easy to game. Together they form something much harder to fake, because improving one almost always degrades another unless you are genuinely getting better.</p>
+
+        <p>The obvious example: a team that merges to production forty times a day. Deployment frequency looks excellent. If twenty-five of those deploys cause an incident and each takes three hours to resolve, the team has not improved anything &mdash; it has automated the delivery of bad changes more quickly.</p>
+
+        <div class="callout">
+          <span class="label">The core idea</span>
+          <p>Move fast <em>and</em> stay safe. A team that is only fast has not improved. A team that is only safe has not either. DORA describes the quadrant where both move together.</p>
+        </div>
+
+        <h2>Misuse one: deployment frequency as a target</h2>
+
+        <p>Once a metric becomes a target, it stops being a measurement. Teams get pressure to hit a number, and the cheapest way to hit a deployment-frequency number is to ship trivial, reversible changes constantly &mdash; a comment fix, a config tweak, a no-op release.</p>
+        <p>That behaviour is easy to detect and pointless to reward. Deployment frequency is a signal of how comfortable the team is with change, not a KPI to be maximised. If someone can improve the number without improving the delivery system, the number was the wrong thing to look at.</p>
+
+        <h2>Misuse two: lead time measured from the wrong starting point</h2>
+
+        <p>This is the most common measurement error we see. <strong>Lead time for changes</strong> is defined as commit to production. Teams frequently measure from when a ticket is created, or from when a pull request is first opened, or from when a change is merged to <code>main</code> and the deploy pipeline starts.</p>
+
+        <p>Each of those is a different and much more flattering number. Time waiting in a review queue is precisely the time worth measuring, and it is excluded by all three.</p>
+
+        <pre><code># Where the time actually goes, commit to production
+git log --format='%h %cI %s' --since='30 days ago'</code></pre>
+
+        <p>For a more honest breakdown, you want at least three separate numbers: time from first commit to first review, review wait time, and time from merge to production. The middle one is usually the largest and the most fixable.</p>
+
+        <h2>Misuse three: change failure rate defined by the wrong team</h2>
+
+        <p>A deployment causes a failure if it required <strong>unplanned remediation</strong>. That is the definition, and the words <em>unplanned</em> are doing a lot of work.</p>
+
+        <ul>
+          <li>Fixing a bug you shipped yesterday is a failure. Count it.</li>
+          <li>A feature flag turned off during release is <em>planned</em>. Not a failure.</li>
+          <li>Scheduled maintenance to patch a CVE is not a failure.</li>
+          <li>Rolling back a release is a planned remediation. Not a failure.</li>
+        </ul>
+
+        <p>Teams that quietly reclassify incidents to protect the ratio are not gaming the metric maliciously. They have usually been shown the metric without the definitions, and optimised the definition instead of the thing.</p>
+
+        <h2>Misuse four: comparing across incomparable systems</h2>
+
+        <p>Average DORA figures published across thousands of companies are aggregated from wildly different contexts: a two-person startup shipping a static site, and a regulated bank deploying to a mainframe estate. Averaging those produces a number that describes nobody.</p>
+
+        <p>Compare your team against <em>itself</em> over time. That is the only comparison that is reliably meaningful, and it is the one most performance reviews get wrong.</p>
+
+        <div class="callout">
+          <span class="label">Practical advice</span>
+          <p>Pick a fixed quarter, publish your own four numbers, and compare them to your own four numbers from the previous quarter. A trend of your own is worth far more than a benchmark against an industry average.</p>
+        </div>
+
+        <h2>Misuse five: treating recovery time as purely technical</h2>
+
+        <p>Mean time to restore is the metric most sensitive to organisational factors, and the least responsive to tooling alone.</p>
+
+        <p>A well-run service with clear runbooks, known decision authority, and a rehearsed rollback will beat a sophisticated platform nobody understands during an incident. The fastest recoveries we have seen were almost never the result of a clever automated rollback &mdash; they were the result of someone who had done it before and did not have to think.</p>
+
+        <h2>What we actually look at first</h2>
+
+        <p>When we run an assessment, the four numbers are the starting point, not the finding. The useful questions are usually:</p>
+
+        <ol>
+          <li><strong>Is the lead time dominated by queueing?</strong> If changes sit waiting rather than moving slowly, the fix is process, not tooling.</li>
+          <li><strong>What is the rollback story?</strong> If the honest answer is a database restore, recovery time is measured in hours no matter what the dashboard says.</li>
+          <li><strong>How many deploys in the last quarter were boring?</strong> This is the real signal. Uneventful is the goal.</li>
+          <li><strong>Who can deploy, and is that person available?</strong> A pipeline only one person can operate is a single point of failure wearing a CI badge.</li>
+        </ol>
+
+        <h2>The metric that is not on the list</h2>
+
+        <p>Unprompted, we always ask how long it takes to undo the last deploy. If nobody can answer without checking, the recovery-time figure is theoretical, whatever the tooling claims.</p>
+
+        <p>Deploy less often if you need to. Deploy far more often once you can undo one in under five minutes. That single number is worth more than the other three combined.</p>
+      </div>
+
+      <div class="article-nav">
+        <a href="../insights/ci-cd-maturity.html">
+          <span class="kind">Next</span>
+          <span class="title">The five stages of CI/CD maturity</span>
+        </a>
+        <a href="../insights.html">
+          <span class="kind">All articles</span>
+          <span class="title">Back to Insights</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-band">
+  <div class="wrap">
+    <h2>Want your own numbers?</h2>
+    <p>A short assessment gives you a measured baseline and a prioritised list of what to fix first. You keep the findings either way.</p>
+    <a class="btn btn-primary" href="../contact.html">Request an assessment</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="../index.html"><span class="mark">S</span> Seevika Technologies</a>
+        <p style="margin:0;max-width:30ch">Cloud, DevOps and platform engineering for teams that need reliability.</p>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
+        <a href="../insights.html">Insights</a>
+      </div>
+      <div>
+        <h4>Services</h4>
+        <a href="../services.html#automation">CI/CD Automation</a>
+        <a href="../services.html#infrastructure">Infrastructure Management</a>
+        <a href="../services.html#devsecops">DevSecOps</a>
+        <a href="../services.html#sre">Site Reliability</a>
+      </div>
+      <div>
+        <h4>Get in touch</h4>
+        <a href="mailto:hello@seevika.com">hello@seevika.com</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>&copy; <span id="year">2026</span> Seevika Technologies. All rights reserved.</span>
+      <span>Cloud &middot; DevOps &middot; Platform Engineering</span>
+    </div>
+  </div>
+</footer>
+
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>

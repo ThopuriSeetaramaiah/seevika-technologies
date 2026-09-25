@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The first fifteen minutes of an incident | Seevika Technologies</title>
+<meta name="description" content="What actually helps in the first quarter hour of a production incident, what makes it worse, and why the urge to find root cause is usually premature.">
+<link rel="canonical" href="https://seevika.com/insights/incident-first-fifteen.html">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="../index.html"><span class="mark">S</span> Seevika Technologies</a>
+    <button class="burger" aria-label="Toggle menu" onclick="document.querySelector('nav.links').classList.toggle('open')">&#9776;</button>
+    <nav class="links">
+      <a href="../index.html">Home</a>
+      <a href="../services.html">Services</a>
+      <a href="../insights.html" class="active">Insights</a>
+      <a href="../about.html">About</a>
+      <a href="../contact.html" class="cta">Get in touch</a>
+    </nav>
+  </div>
+</header>
+
+<section class="page-head">
+  <div class="wrap">
+    <div class="crumbs"><a href="../index.html">Home</a> &rsaquo; <a href="../insights.html">Insights</a></div>
+    <h1>The first fifteen minutes of an incident</h1>
+    <p class="lede">The instinct to understand the problem before acting is usually wrong, and it is the single biggest determinant of how long an incident lasts.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="article-wrap">
+      <div class="meta">
+        <span><strong>Topic</strong> Reliability</span>
+        <span><strong>Audience</strong> On-call engineers, engineering leads</span>
+        <span><strong>Reading time</strong> 6 minutes</span>
+      </div>
+
+      <div class="article-body">
+        <p>An incident is running and the service is degraded. You have a pager, a group chat, and a strong pull to understand what is happening before you touch anything.</p>
+        <p>That pull is worth examining, because it is the reason well-run teams take an hour to do something that would have taken five minutes.</p>
+
+        <h2>Restore service before you understand it</h2>
+
+        <p>This is the core principle and it is worth stating plainly: <strong>mitigation beats diagnosis</strong>, every time, without exception.</p>
+
+        <p>An incident that is still running is an active cost to users, to the business, and to your on-call engineer&rsquo;s sleep. A postmortem will produce the same understanding tomorrow at no additional cost. Restoring service now and investigating later strictly dominates investigating first, unless the mitigation itself is dangerous.</p>
+
+        <div class="callout">
+          <span class="label">The reframing</span>
+          <p>You are not debugging. You are buying time cheaply so that the eventual debugging can be done properly, without an audience and without a pager counting down.</p>
+        </div>
+
+        <h2>What the first fifteen minutes should look like</h2>
+
+        <h3>Minutes 0&ndash;2: establish the blast radius</h3>
+        <p>Three questions, in this order:</p>
+        <ul>
+          <li><strong>Who is affected?</strong> All users, one region, one tenant, or just an internal tool?</li>
+          <li><strong>How bad is it?</strong> Slow, degraded, or completely down? This determines urgency, not the other way round.</li>
+          <li><strong>What changed recently?</strong> Deploys, config changes, certificate expiry, dependency update, traffic increase.</li>
+        </ul>
+
+        <p>If someone has recently made a change, the fastest mitigation is frequently to undo it. You do not need to know why it broke to know it is the most recent variable.</p>
+
+        <h3>Minutes 2&ndash;5: pick the boring option</h3>
+        <p>When the fastest safe action is not obvious, take the one that returns you to a known-good state. Roll back the deploy. Shift traffic. Fail over. Scale up. Disable the feature flag.</p>
+
+        <p>Resist anything that requires understanding the new behaviour. A live experiment on production while users are affected is how a forty-minute incident becomes a four-hour one.</p>
+
+        <h3>Minutes 5&ndash;10: communicate</h3>
+        <p>Say what you know, what you are doing, and when you will update next. Even if all three are &ldquo;investigating&rdquo;.</p>
+        <p>The silence is what generates the anxiety. A short message every ten minutes, including the boring ones, is what stops a technical incident becoming an organisational one.</p>
+
+        <h3>Minutes 10&ndash;15: verify, then hand over</h3>
+        <p>Confirm the service is actually healthy rather than quiet, and check the graphs you did not look at during the panic. Then decide: continue, or escalate with a clear summary of what you have done and ruled out.</p>
+
+        <p>Escalating with a good summary is a skill, not an admission of failure. &ldquo;Deploy at 14:02, rolled back at 14:09, error rate back to baseline at 14:11, now investigating why the deploy passed CI&rdquo; saves the next person twenty minutes.</p>
+
+        <h2>What makes it worse</h2>
+
+        <p>Some habits consistently turn a manageable incident into a bad one.</p>
+
+        <p><strong>Changing multiple things at once.</strong> Every simultaneous change destroys your ability to attribute the effect. One change, observe, then the next.</p>
+
+        <p><strong>Debugging in the incident channel.</strong> The channel is for status and decisions. Deep investigation belongs in a side thread, summarised back. Otherwise the people making decisions cannot see what is happening.</p>
+
+        <p><strong>Silent fixing.</strong> Someone restarts a service at 2am, says nothing, and service comes back. The team learns that the system is opaque and that people are taking undocumented risks on its behalf. This one corrodes trust permanently.</p>
+
+        <p><strong>Declaring victory too early.</strong> &ldquo;Fixed&rdquo; before the graphs confirm recovery, followed by a second incident when the underlying condition recurs.</p>
+
+        <div class="callout">
+          <span class="label">Worth internalising</span>
+          <p>The instinct to diagnose before acting is a debugging instinct, and it is the wrong one here. You are an operator right now. Operators restore service and investigate later.</p>
+        </div>
+
+        <h2>Why the first fifteen minutes reveal everything</h2>
+
+        <p>How a team handles the opening quarter hour of an incident is a direct readout of how its systems are built:</p>
+
+        <ul>
+          <li>If nobody knows what changed, there is no deployment history or change log.</li>
+          <li>If rollback is not obvious, deployment is not reversible.</li>
+          <li>If nobody can say what is affected, there is no meaningful alerting.</li>
+          <li>If communication needs permission, there is no incident process.</li>
+        </ul>
+
+        <p>That is the useful insight. Making the first fifteen minutes calm is not primarily a people problem or a process-training problem. It is mostly a consequence of whether the platform supports fast, boring, reversible decisions.</p>
+
+        <h2>What good looks like</h2>
+
+        <p>A team doing this well has four things, and none of them are about seniority:</p>
+
+        <ol>
+          <li>A deploy that can be undone in under five minutes, rehearsed rather than assumed</li>
+          <li>Alerts that fire on user-visible symptoms, so the blast radius is already known when the page arrives</li>
+          <li>A runbook for the common cases, written when nobody was stressed</li>
+          <li>Permission to roll back without asking anyone</li>
+        </ol>
+
+        <p>Give a team those four things and the first fifteen minutes stop being the hard part. Take them away, and no amount of process or training compensates.</p>
+      </div>
+
+      <div class="article-nav">
+        <a href="../insights/terraform-state.html">
+          <span class="kind">Previous</span>
+          <span class="title">Terraform state will be the thing that breaks</span>
+        </a>
+        <a href="../insights/shift-left-security.html">
+          <span class="kind">Next</span>
+          <span class="title">Shifting security left without stopping delivery</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-band">
+  <div class="wrap">
+    <h2>How does your team handle an incident?</h2>
+    <p>A short review of your alerting, runbooks and rollback capability usually finds more than a long argument about process.</p>
+    <a class="btn btn-primary" href="../contact.html">Get in touch</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="../index.html"><span class="mark">S</span> Seevika Technologies</a>
+        <p style="margin:0;max-width:30ch">Cloud, DevOps and platform engineering for teams that need reliability.</p>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
+        <a href="../insights.html">Insights</a>
+      </div>
+      <div>
+        <h4>Services</h4>
+        <a href="../services.html#sre">Site Reliability</a>
+        <a href="../services.html#automation">CI/CD Automation</a>
+        <a href="../services.html#infrastructure">Infrastructure Management</a>
+        <a href="../services.html#platform">Platform Engineering</a>
+      </div>
+      <div>
+        <h4>Get in touch</h4>
+        <a href="mailto:hello@seevika.com">hello@seevika.com</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>&copy; <span id="year">2026</span> Seevika Technologies. All rights reserved.</span>
+      <span>Cloud &middot; DevOps &middot; Platform Engineering</span>
+    </div>
+  </div>
+</footer>
+
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>

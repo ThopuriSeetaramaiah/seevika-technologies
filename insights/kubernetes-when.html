@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Do you actually need Kubernetes? | Seevika Technologies</title>
+<meta name="description" content="An honest look at the operational cost of Kubernetes, and the workload shapes where a managed platform or plain infrastructure as code is the better answer.">
+<link rel="canonical" href="https://seevika.com/insights/kubernetes-when.html">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="../index.html"><span class="mark">S</span> Seevika Technologies</a>
+    <button class="burger" aria-label="Toggle menu" onclick="document.querySelector('nav.links').classList.toggle('open')">&#9776;</button>
+    <nav class="links">
+      <a href="../index.html">Home</a>
+      <a href="../services.html">Services</a>
+      <a href="../insights.html" class="active">Insights</a>
+      <a href="../about.html">About</a>
+      <a href="../contact.html" class="cta">Get in touch</a>
+    </nav>
+  </div>
+</header>
+
+<section class="page-head">
+  <div class="wrap">
+    <div class="crumbs"><a href="../index.html">Home</a> &rsaquo; <a href="../insights.html">Insights</a></div>
+    <h1>Do you actually need Kubernetes?</h1>
+    <p class="lede">Usually not. And the cases where you genuinely do are narrower and more specific than the amount of Kubernetes content on the internet would suggest.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="article-wrap">
+      <div class="meta">
+        <span><strong>Topic</strong> Platform choice</span>
+        <span><strong>Audience</strong> Technical leads, CTOs</span>
+        <span><strong>Reading time</strong> 9 minutes</span>
+      </div>
+
+      <div class="article-body">
+        <p>Kubernetes is the default recommendation for container orchestration, to the point where choosing something else requires justifying yourself. That is an unusual position for infrastructure, and worth examining on its merits rather than accepting.</p>
+
+        <h2>What you are actually adopting</h2>
+
+        <p>Kubernetes is not one thing. Adopting it means taking on a permanent operational responsibility for several substantial systems at once:</p>
+
+        <ul>
+          <li><strong>The control plane</strong> &mdash; API server, scheduler, controller manager, and etcd, which is a distributed system with its own operational requirements</li>
+          <li><strong>etcd and state</strong> &mdash; the single most critical datastore in the stack, with backup and compaction behaviour that catches people out</li>
+          <li><strong>networking</strong> &mdash; CNI plugins, ingress controllers, service meshes if you go there</li>
+          <li><strong>Storage</strong> &mdash; PersistentVolumeClaims, storage classes, and the expansion limits of most volume drivers</li>
+          <li><strong>Upgrade lifecycle</strong> &mdash; roughly a minor version every few months, each one a genuine project</li>
+        </ul>
+
+        <p>None of this is unreasonable for a large organisation. The point is that it is a large commitment, and it does not shrink because the YAML looks clean.</p>
+
+        <h2>The workload shapes where Kubernetes is the right answer</h2>
+
+        <ol>
+          <li><strong>You have many teams deploying independently.</strong> Scheduling, resource quotas, network policies and self-service isolation are genuinely hard to reproduce well without it.</li>
+          <li><strong>You need a specific runtime behaviour.</strong> Sidecars, init containers, custom scheduling, per-workload networking policy. If you can describe why, you probably need it.</li>
+          <li><strong>Your hardware or compliance model demands it.</strong> On-premises clusters for air-gapped or residency-restricted workloads.</li>
+          <li><strong>Your organisation is built to run it.</strong> If you have a platform team whose actual job is operating Kubernetes, the cost calculation changes completely.</li>
+          <li><strong>You need portability across environments.</strong> If you must run the same artefact in a managed cloud, on-premises and at the edge, a standard runtime has real value.</li>
+        </ol>
+
+        <h2>The cases where it usually is not</h2>
+
+        <p><strong>A small team with a handful of services.</strong> If four people deploy twelve services, the platform team is three of you, and the operational surface is a single managed cluster, you have added a large system to solve a problem you do not have.</p>
+
+        <p><strong>You do not have anyone whose job is reliability.</strong> Kubernetes does not make your service reliable. Someone has to patch, upgrade, tune, watch the etcd disk, and read the logs when admission webhooks fail. Without that person, you have added an outage surface rather than removed one.</p>
+
+        <p><strong>Your workload is not container-shaped.</strong> Long-running batch work, spiky event processing, or anything where you are paying for idle reserved capacity to get a good utilisation number.</p>
+
+        <div class="callout">
+          <span class="label">The honest test</span>
+          <p>Ask who will be on call for the cluster at 3am in eighteen months, and whether they have the time to learn it properly. If the honest answer is &ldquo;whoever is nearest&rdquo;, the platform is a net negative.</p>
+        </div>
+
+        <h2>The alternatives, honestly compared</h2>
+
+        <table>
+          <thead>
+            <tr><th>Option</th><th>Good for</th><th>Costs you</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Managed containers</strong><br><span style="font-size:0.85rem">ECS, Cloud Run, App Service, Cloud Run</span></td>
+              <td>Most services under a few thousand requests per second. No control plane to run.</td>
+              <td>Less control. Some portability limits. Per-request pricing surprises at scale.</td>
+            </tr>
+            <tr>
+              <td><strong>Serverless</strong><br><span style="font-size:0.85rem">Lambda, Cloud Functions</span></td>
+              <td>Event-driven, spiky, unpredictable load. Genuinely near-zero idle cost.</td>
+              <td>Cold starts, execution limits, awkward long-running work, vendor coupling.</td>
+            </tr>
+            <tr>
+              <td><strong>Platform as a service</strong><br><span style="font-size:0.85rem">Heroku, Render, Fly.io, Railway</span></td>
+              <td>Getting a service deployed this afternoon, without an infrastructure person.</td>
+              <td>Cost at scale, less control, and you are inside their constraints.</td>
+            </tr>
+            <tr>
+              <td><strong>Plain IaC</strong><br><span style="font-size:0.85rem">Terraform, ECS, systemd, Nomad</span></td>
+              <td>Predictable workloads, steady traffic, teams that value control. Underrated.</td>
+              <td>You build the deployment story yourself. Rollout, health checks, draining.</td>
+            </tr>
+            <tr>
+              <td><strong>Kubernetes</strong><br><span style="font-size:0.85rem">EKS, GKE, AKS, self-managed</span></td>
+              <td>Many teams, complex scheduling, portability, hard compliance constraints.</td>
+              <td>Real operational load, permanent, and it does not go away.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2>The migration is the expensive part</h2>
+
+        <p>The most common Kubernetes project we get brought into is not an adoption. It is an escape from a partial adoption that was never finished.</p>
+
+        <p>A cluster that was stood up, ran two services, and now has workloads nobody understands running an out-of-support version, with stateful data in <code>hostPath</code> volumes and a YAML file in someone's Documents folder as the only record of the deployment process. Replacing that is considerably more work than starting on a managed platform.</p>
+
+        <p>If that describes you, the first useful step is not Kubernetes. It is finding out what is actually running before deciding what it should be running on.</p>
+
+        <h2>What we will usually recommend</h2>
+
+        <p>Start on the simplest thing that could work, and move when a specific requirement forces you to. Concretely: a managed container service for most services, serverless for genuinely spiky or event-driven work, and infrastructure as code describing all of it. Add Kubernetes when you hit a concrete wall &mdash; a compliance requirement, a scheduling need, a portability commitment &mdash; and not before.</p>
+
+        <p>This is not the advice that generates the most Kubernetes work. It is the advice that tends to produce the fewest outages, which is the metric we actually care about.</p>
+      </div>
+
+      <div class="article-nav">
+        <a href="../insights/ci-cd-maturity.html">
+          <span class="kind">Previous</span>
+          <span class="title">The five stages of CI/CD maturity</span>
+        </a>
+        <a href="../insights/terraform-state.html">
+          <span class="kind">Next</span>
+          <span class="title">Terraform state will be the thing that breaks</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-band">
+  <div class="wrap">
+    <h2>Not sure which platform fits?</h2>
+    <p>An independent review of what you run, what it costs, and what the simplest sufficient option would be.</p>
+    <a class="btn btn-primary" href="../contact.html">Request an assessment</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="../index.html"><span class="mark">S</span> Seevika Technologies</a>
+        <p style="margin:0;max-width:30ch">Cloud, DevOps and platform engineering for teams that need reliability.</p>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
+        <a href="../insights.html">Insights</a>
+      </div>
+      <div>
+        <h4>Services</h4>
+        <a href="../services.html#automation">CI/CD Automation</a>
+        <a href="../services.html#infrastructure">Infrastructure Management</a>
+        <a href="../services.html#cloud">Cloud Management</a>
+        <a href="../services.html#advisory">Advisory</a>
+      </div>
+      <div>
+        <h4>Get in touch</h4>
+        <a href="mailto:hello@seevika.com">hello@seevika.com</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>&copy; <span id="year">2026</span> Seevika Technologies. All rights reserved.</span>
+      <span>Cloud &middot; DevOps &middot; Platform Engineering</span>
+    </div>
+  </div>
+</footer>
+
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>

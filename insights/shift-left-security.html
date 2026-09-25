@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shifting security left without stopping delivery | Seevika Technologies</title>
+<meta name="description" content="How to put security controls into the delivery path so teams move faster, rather than bolting on a gate that becomes the reason people bypass it.">
+<link rel="canonical" href="https://seevika.com/insights/shift-left-security.html">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="../index.html"><span class="mark">S</span> Seevika Technologies</a>
+    <button class="burger" aria-label="Toggle menu" onclick="document.querySelector('nav.links').classList.toggle('open')">&#9776;</button>
+    <nav class="links">
+      <a href="../index.html">Home</a>
+      <a href="../services.html">Services</a>
+      <a href="../insights.html" class="active">Insights</a>
+      <a href="../about.html">About</a>
+      <a href="../contact.html" class="cta">Get in touch</a>
+    </nav>
+  </div>
+</header>
+
+<section class="page-head">
+  <div class="wrap">
+    <div class="crumbs"><a href="../index.html">Home</a> &rsaquo; <a href="../insights.html">Insights</a></div>
+    <h1>Shifting security left without stopping delivery</h1>
+    <p class="lede">&ldquo;Shift left&rdquo; has become a slogan attached to a mandate to add gates. Done well it makes teams faster. Done badly it creates exactly the bypass it was meant to prevent.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="article-wrap">
+      <div class="meta">
+        <span><strong>Topic</strong> DevSecOps</span>
+        <span><strong>Audience</strong> Engineering leads, security engineers, platform teams</span>
+        <span><strong>Reading time</strong> 7 minutes</span>
+      </div>
+
+      <div class="article-body">
+        <p>The reasoning behind shifting left is sound. A vulnerability found in the IDE takes minutes to fix. The same vulnerability found in production takes a week, an incident report, and a customer notification. Catching it earlier is unambiguously cheaper.</p>
+        <p>Where it goes wrong is the implementation. &ldquo;Shift left&rdquo; is usually interpreted as &ldquo;add a gate to the pipeline&rdquo;, and gates have two failure modes that are well documented.</p>
+
+        <h2>Why gates fail</h2>
+
+        <p><strong>Failure one: they are slow.</strong> A security stage that adds eight minutes to every build gets skipped, gets run only on release branches, or gets tolerated while everyone complains. The control still exists on paper and not in practice.</p>
+
+        <p><strong>Failure two: the findings are not actionable.</strong> A pipeline that reports four hundred findings, of which one is a real issue, trains the team to ignore the output entirely. Alert fatigue is not a people problem; it is a signal-to-noise problem, and it is designed in by the tool configuration.</p>
+
+        <div class="callout">
+          <span class="label">The test for any security gate</span>
+          <p>When it blocks a deploy, can the engineer receiving that block say precisely what to do and how long it will take? If not, the gate is a tax, and it will be routed around.</p>
+        </div>
+
+        <h2>Start with the developer, not the pipeline</h2>
+
+        <p>The most effective shift-left control is also the least glamorous: feedback inside the editor, before a commit exists.</p>
+
+        <pre><code># Pre-commit: fast, local, only what is unambiguously a problem
+- secret scanning        (regex patterns, no network)
+- format and lint        (seconds, not minutes)
+- fast unit tests        (under 30 seconds)
+
+# CI: slower, authoritative, blocks the merge
+- full test suite
+- dependency vulnerability scan
+- SAST on changed files
+- container image scan, once built
+- SBOM generation</code></pre>
+
+        <p>The split matters. Anything that takes more than a few seconds does not belong in the pre-commit hook, because developers will bypass it and then the control is theatre.</p>
+
+        <h2>Make findings cheap to act on</h2>
+
+        <p>This is where most implementations lose the room. A tool that reports a critical vulnerability should produce something a developer can fix in under ten minutes, or it should not be a blocking gate.</p>
+
+        <ul>
+          <li><strong>Suppress what does not apply.</strong> A dev-dependency CVE in a package that never ships is noise. Filtering to runtime dependencies is most of the value.</li>
+          <li><strong>Fix at the source.</strong> A base image rebuilt weekly with patches applied fixes a hundred findings that would otherwise be triaged one by one.</li>
+          <li><strong>Set expiry dates, not permanent exceptions.</strong> A <code>// nosec</code> with a review date forces the conversation instead of ending it silently.</li>
+          <li><strong>Report new findings only.</strong> A wall of pre-existing findings gets ignored; the diff is what gets read.</li>
+        </ul>
+
+        <h2>Automate the compliance evidence too</h2>
+
+        <p>If a framework like ISO 27001 or SOC 2 drives the work, the most valuable shift-left move is usually not another scanner. It is generating the evidence automatically from the pipeline you already have.</p>
+
+        <p>Every deploy already produces a version, an approver, a timestamp, a test result and an artefact. That is audit evidence, and collecting it by hand once a year is what turns compliance into a quarter of chaos for somebody.</p>
+
+        <p>Point the pipeline at the evidence store as it runs, and the audit becomes a query rather than a project.</p>
+
+        <h2>Where the control actually belongs</h2>
+
+        <table>
+          <thead>
+            <tr><th>Control</th><th>Right place</th><th>Why</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Secret detection</td><td>Pre-commit and CI</td><td>Must be fast, and must also scan history not just new commits</td></tr>
+            <tr><td>Dependency scanning</td><td>CI, on the diff</td><td>Slow enough to be a CI job, useful enough to gate</td></tr>
+            <tr><td>SAST</td><td>IDE and CI, incrementally</td><td>Best in the editor, authoritative in CI</td></tr>
+            <tr><td>Image scanning</td><td>Registry, on push</td><td>Catches what the source scan cannot see</td></tr>
+            <tr><td>Admission policy</td><td>Cluster, at deploy</td><td>The last checkpoint before something runs</td></tr>
+            <tr><td>Runtime secrets</td><td>Platform, not the app</td><td>Short-lived credentials beat scanning for long-lived ones</td></tr>
+            <tr><td>Audit evidence</td><td>Pipeline, continuously</td><td>Collected as a by-product, not as a project</td></tr>
+          </tbody>
+        </table>
+
+        <h2>The metric that tells you it is working</h2>
+
+        <p>Not the number of vulnerabilities found, which always goes up when you improve visibility and is therefore a bad metric to optimise.</p>
+
+        <p>The useful signal is <strong>mean time to remediate a critical finding</strong>, and specifically whether it is falling. A team that finds more issues and fixes them faster is genuinely improving. A team that finds fewer issues has worse visibility, not better security.</p>
+
+        <h2>The summary</h2>
+
+        <p>Shift left works when the fast controls are in the editor, the authoritative ones are in CI, the findings are specific enough to act on, and the exceptions expire on their own.</p>
+
+        <p>It fails when it arrives as a mandate to add gates, because the fastest route to a satisfied auditor and an unsatisfied engineering team is a control nobody believes in.</p>
+      </div>
+
+      <div class="article-nav">
+        <a href="../insights/incident-first-fifteen.html">
+          <span class="kind">Previous</span>
+          <span class="title">The first fifteen minutes of an incident</span>
+        </a>
+        <a href="../insights.html">
+          <span class="kind">All articles</span>
+          <span class="title">Back to Insights</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-band">
+  <div class="wrap">
+    <h2>How is your security tooling set up?</h2>
+    <p>We will tell you which controls are real, which are theatre, and which would actually make your teams faster.</p>
+    <a class="btn btn-primary" href="../contact.html">Get in touch</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="../index.html"><span class="mark">S</span> Seevika Technologies</a>
+        <p style="margin:0;max-width:30ch">Cloud, DevOps and platform engineering for teams that need reliability.</p>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
+        <a href="../insights.html">Insights</a>
+      </div>
+      <div>
+        <h4>Services</h4>
+        <a href="../services.html#devsecops">DevSecOps</a>
+        <a href="../services.html#automation">CI/CD Automation</a>
+        <a href="../services.html#platform">Platform Engineering</a>
+        <a href="../services.html#advisory">Advisory</a>
+      </div>
+      <div>
+        <h4>Get in touch</h4>
+        <a href="mailto:hello@seevika.com">hello@seevika.com</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>&copy; <span id="year">2026</span> Seevika Technologies. All rights reserved.</span>
+      <span>Cloud &middot; DevOps &middot; Platform Engineering</span>
+    </div>
+  </div>
+</footer>
+
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The five stages of CI/CD maturity | Seevika Technologies</title>
+<meta name="description" content="A practical model for working out which CI/CD maturity stage your team is actually at, and what unblocking the next one really involves.">
+<link rel="canonical" href="https://seevika.com/insights/ci-cd-maturity.html">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="../index.html"><span class="mark">S</span> Seevika Technologies</a>
+    <button class="burger" aria-label="Toggle menu" onclick="document.querySelector('nav.links').classList.toggle('open')">&#9776;</button>
+    <nav class="links">
+      <a href="../index.html">Home</a>
+      <a href="../services.html">Services</a>
+      <a href="../insights.html" class="active">Insights</a>
+      <a href="../about.html">About</a>
+      <a href="../contact.html" class="cta">Get in touch</a>
+    </nav>
+  </div>
+</header>
+
+<section class="page-head">
+  <div class="wrap">
+    <div class="crumbs"><a href="../index.html">Home</a> &rsaquo; <a href="../insights.html">Insights</a></div>
+    <h1>The five stages of CI/CD maturity</h1>
+    <p class="lede">Most teams are not trying to be at stage five. Most teams do not know which stage they are at. Both are fixable, and the second is the more urgent.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="article-wrap">
+      <div class="meta">
+        <span><strong>Topic</strong> Delivery</span>
+        <span><strong>Audience</strong> Engineering leads, platform teams</span>
+        <span><strong>Reading time</strong> 7 minutes</span>
+      </div>
+
+      <div class="article-body">
+        <p>There is no shortage of maturity models. Most of them are a way for a consultant to produce a colourful diagram and a twelve-month contract. This one is deliberately smaller and aimed at a single question: <em>what is the single thing to fix next?</em></p>
+
+        <h2>Stage one: manual</h2>
+
+        <p>Deployments happen by a person running commands, often from a laptop, following a document that is usually out of date. There is no environment parity. Nobody can say what is running in production without looking at it.</p>
+
+        <p>This stage is more common in organisations that would describe themselves as &ldquo;fully automated&rdquo;. The build is automated. The deploy is not. That distinction matters enormously and is worth checking before anything else.</p>
+
+        <div class="callout">
+          <span class="label">How to tell</span>
+          <p>Ask someone to deploy a hotfix to production while you watch. If they need to find a runbook, check a wiki page, or recall the correct sequence from memory, you are here.</p>
+        </div>
+
+        <h2>Stage two: scripted</h2>
+
+        <p>There is a script, and it works. Deployments are at least reproducible, and usually faster and less error-prone than before. But the script is run manually, it lives somewhere slightly awkward, and it assumes the person running it knows the context.</p>
+
+        <p>Real progress from stage one. Also where a lot of teams stall, because the script works and nobody feels enough pain to justify the next step.</p>
+
+        <h2>Stage three: automated pipeline</h2>
+
+        <p>Code commits trigger a build, tests, and a deployment to at least one non-production environment without human involvement. Deployments to production may still be approved by a person, which is fine &mdash; that is not a failure of automation, it is a decision about risk.</p>
+
+        <p>This is the stage most teams describe themselves as being at when they are not. The test is specific: <strong>does a commit to <code>main</code> cause a build and a test run with no human involved at any point?</strong> If a developer must click something in a browser to start the process, you are at stage two with extra steps.</p>
+
+        <h2>Stage four: continuous delivery</h2>
+
+        <p>Every change that passes the gates is <em>capable</em> of going to production immediately and safely. Deploying is a decision, not a project. Small, frequent, reversible.</p>
+
+        <p>The distinguishing capability is <strong>rollback</strong>. Not the intention to roll back, and not a documented procedure for it &mdash; an actual tested, rehearsed ability to return to the previous state in minutes, including the data layer.</p>
+
+        <p>Most of the work of getting here is unglamorous: environment parity, making configuration injectable rather than baked in, and automating the database changes that everyone is afraid to touch.</p>
+
+        <h2>Stage five: continuous deployment</h2>
+
+        <p>Every change that passes the gates goes to production automatically. No approval, no ceremony. Humans decide what gets built, not whether it ships.</p>
+
+        <p>This is a legitimate target for a small number of teams and a bad target for most. It requires very high automated test coverage, extremely low change failure rates, and real confidence in observability. Forced there prematurely, it produces a fast path to production problems.</p>
+
+        <div class="callout">
+          <span class="label">Worth saying plainly</span>
+          <p>Stage five is not the finish line, and aiming for it is not maturity. A team that deploys weekly, safely, with a five-minute rollback and understands its system is doing well. Do not let anyone tell you otherwise.</p>
+        </div>
+
+        <h2>How to find your actual stage</h2>
+
+        <p>Ask these four questions and take the lowest answer. Do not average them, and do not let the most senior person in the room answer for everyone.</p>
+
+        <ol>
+          <li>Does a commit trigger a build and test run with no human action?</li>
+          <li>Can you deploy to a production-like environment from any developer machine, on demand?</li>
+          <li>Have you performed a rollback in the last six months, and did it work?</li>
+          <li>Can you name the current production version for any given service, right now?</li>
+        </ol>
+
+        <p>If question three is a no, you are at stage three regardless of what the CI configuration implies. The configuration describes the intended process; the rollback test describes the real one.</p>
+
+        <h2>What actually blocks the next stage</h2>
+
+        <p>It is almost never the build tool.</p>
+
+        <table>
+          <thead>
+            <tr><th>Blocked at</th><th>Usually the real blocker</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Manual &rarr; scripted</td><td>Nobody owns the deployment process, so nobody is accountable for writing it down</td></tr>
+            <tr><td>Scripted &rarr; automated</td><td>Environment drift. Dev, test and prod genuinely differ, so the script only works in one of them.</td></tr>
+            <tr><td>Automated &rarr; delivery</td><td>Database migrations are not reversible, so deploying feels irreversible</td></tr>
+            <tr><td>Delivery &rarr; continuous</td><td>Test coverage is too low to trust the gates, so the gates get bypassed</td></tr>
+          </tbody>
+        </table>
+
+        <p>Each of these is a design problem, not a tooling problem, and each is solvable without buying anything.</p>
+
+        <h2>The trap of the maturity model</h2>
+
+        <p>Used well, a model like this tells you where to look next. Used badly, it becomes a score to report upwards, and the fastest way to improve a score is to describe the current state more generously.</p>
+
+        <p>The most useful question is not &ldquo;which stage are we at&rdquo; but <strong>&ldquo;what did the last production incident teach us about our process?&rdquo;</strong> That answer is always concrete, always actionable, and never flattering.</p>
+      </div>
+
+      <div class="article-nav">
+        <a href="../insights/dora-metrics.html">
+          <span class="kind">Previous</span>
+          <span class="title">DORA metrics, properly explained</span>
+        </a>
+        <a href="../insights/kubernetes-when.html">
+          <span class="kind">Next</span>
+          <span class="title">Do you actually need Kubernetes?</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-band">
+  <div class="wrap">
+    <h2>Not sure which stage you are at?</h2>
+    <p>We can tell you in a short assessment, with the specific things to fix first rather than a maturity score.</p>
+    <a class="btn btn-primary" href="../contact.html">Get in touch</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="../index.html"><span class="mark">S</span> Seevika Technologies</a>
+        <p style="margin:0;max-width:30ch">Cloud, DevOps and platform engineering for teams that need reliability.</p>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
+        <a href="../insights.html">Insights</a>
+      </div>
+      <div>
+        <h4>Services</h4>
+        <a href="../services.html#automation">CI/CD Automation</a>
+        <a href="../services.html#infrastructure">Infrastructure Management</a>
+        <a href="../services.html#devsecops">DevSecOps</a>
+        <a href="../services.html#sre">Site Reliability</a>
+      </div>
+      <div>
+        <h4>Get in touch</h4>
+        <a href="mailto:hello@seevika.com">hello@seevika.com</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>&copy; <span id="year">2026</span> Seevika Technologies. All rights reserved.</span>
+      <span>Cloud &middot; DevOps &middot; Platform Engineering</span>
+    </div>
+  </div>
+</footer>
+
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>

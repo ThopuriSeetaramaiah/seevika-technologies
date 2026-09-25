@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Terraform state will be the thing that breaks | Seevika Technologies</title>
+<meta name="description" content="Terraform state is where infrastructure projects fail, usually in ways invisible until expensive. A practical guide to state layout, locking, backups and recovery.">
+<link rel="canonical" href="https://seevika.com/insights/terraform-state.html">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="../index.html"><span class="mark">S</span> Seevika Technologies</a>
+    <button class="burger" aria-label="Toggle menu" onclick="document.querySelector('nav.links').classList.toggle('open')">&#9776;</button>
+    <nav class="links">
+      <a href="../index.html">Home</a>
+      <a href="../services.html">Services</a>
+      <a href="../insights.html" class="active">Insights</a>
+      <a href="../about.html">About</a>
+      <a href="../contact.html" class="cta">Get in touch</a>
+    </nav>
+  </div>
+</header>
+
+<section class="page-head">
+  <div class="wrap">
+    <div class="crumbs"><a href="../index.html">Home</a> &rsaquo; <a href="../insights.html">Insights</a></div>
+    <h1>Terraform state will be the thing that breaks</h1>
+    <p class="lede">Not the HCL, and not the provider. State is the part nobody plans for, it fails silently, and the recovery options are much worse than people assume.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="article-wrap">
+      <div class="meta">
+        <span><strong>Topic</strong> Infrastructure as code</span>
+        <span><strong>Audience</strong> Platform engineers, anyone running Terraform in anger</span>
+        <span><strong>Reading time</strong> 8 minutes</span>
+      </div>
+
+      <div class="article-body">
+        <p>Terraform configuration is declarative and reviewable. State is a JSON file that records what Terraform believes it has created, so it can work out the difference between desired and actual.</p>
+        <p>Every serious Terraform problem traces back to that file being wrong, lost, or contended. And because the code is in Git while the state usually is not, teams tend to protect the thing that is already safe and leave the thing that is not.</p>
+
+        <h2>State is a database, not a file</h2>
+
+        <p>The single most damaging misconception is treating <code>terraform.tfstate</code> as a config file. It is a serialised database that happens to be JSON, and it is the authoritative record of your infrastructure.</p>
+
+        <div class="callout">
+          <span class="label">The consequence</span>
+          <p>Corrupt it, and Terraform loses track of resources that very much still exist. It will then cheerfully propose creating duplicates. In a database context, that is a production incident.</p>
+        </div>
+
+        <p>Local state has no locking, no concurrency control, and no history. Two people running <code>apply</code> against the same directory will corrupt it, and they will usually find out afterwards.</p>
+
+        <h2>Remote state, done properly</h2>
+
+        <p>Use a shared backend with locking from the first day, even with one person on the project. Solo projects grow, and the migration is far more painful while infrastructure is small.</p>
+
+        <p>The standard pattern is object storage for state plus a lock table:</p>
+
+        <pre><code>terraform {
+  backend "s3" {
+    bucket         = "acme-terraform-state"
+    key            = "prod/network/terraform.tfstate"
+    region         = "eu-west-2"
+    dynamodb_table = "acme-terraform-locks"
+    encrypt        = true
+  }
+}</code></pre>
+
+        <p>Note the <code>key</code> containing the full path. That is deliberate, and it is the most commonly missed detail.</p>
+
+        <h3>One state file per environment, per bounded component</h3>
+
+        <p>Monolithic state &mdash; one file describing an entire organisation &mdash; fails in three ways at once. It locks during applies, so teams block each other. A single wrong resource blocks every plan. And every apply rewrites the whole file, so a merge conflict is almost certain once two people work concurrently.</p>
+
+        <p>Split state along lines that limit blast radius:</p>
+
+        <ul>
+          <li>Separate per environment. <code>prod</code>, <code>staging</code> and <code>dev</code> never share a state file.</li>
+          <li>Separate per bounded component. Networking, data, and an application estate are different lifecycles.</li>
+          <li>Split when blast radius demands it, not before. Three small state files beat thirty tiny ones &mdash; every split adds a module boundary to maintain.</li>
+        </ul>
+
+        <h2>Locking is not optional</h2>
+
+        <p>Concurrent <code>apply</code> is the mechanism behind most corrupted states. Locking prevents it. The historical mechanism is a DynamoDB table; the modern one uses S3 native conditional writes, and Terraform 1.10+ uses that by default for S3 backends without a <code>dynamodb_table</code> block.</p>
+
+        <p>Whichever you use, never disable locking because a pipeline hung and you are in a hurry. The locked state is not the problem; the interrupted run is.</p>
+
+        <h2>Back up state, properly</h2>
+
+        <p>Object versioning on the state bucket is the minimum, not the whole answer. It gives you rollback within the bucket. It does not help if someone deletes the bucket.</p>
+
+        <ul>
+          <li><strong>Versioning enabled</strong> on the state bucket, non-negotiable</li>
+          <li><strong>Encryption at rest</strong>, plus a deliberate decision on who can read it, because state contains plaintext values</li>
+          <li><strong>Object lock or a separate backup</strong> in another account for the state you would be most upset to lose</li>
+          <li><strong>Restores tested.</strong> A backup you have never restored is a hypothesis.</li>
+        </ul>
+
+        <div class="callout">
+          <span class="label">State contains secrets</span>
+          <p>Unless you are explicit, values marked sensitive land in state in plaintext, including database passwords and API tokens. Treat the state file as a secret, restrict access, and enable encryption at rest.</p>
+        </div>
+
+        <h2>Never edit state by hand</h2>
+
+        <p>Every stack trace in the history of Terraform contains someone who decided a manual edit would be faster. The supported commands exist, and they are safer than they look:</p>
+
+        <pre><code>terraform state list
+terraform state show aws_instance.web
+terraform state rm aws_instance.orphaned
+terraform state mv aws_instance.old aws_instance.new
+terraform import aws_instance.imported id=i-abc123</code></pre>
+
+        <p><code>state rm</code> is the one to reach for when a resource was deleted outside Terraform and <code>apply</code> proposes recreating it. <code>state mv</code> is the one for renaming or restructuring &mdash; and it is far safer than it appears, because Terraform updates the binding in the same operation rather than destroying and recreating.</p>
+
+        <h2>The expensive mistake: renaming a state bucket</h2>
+
+        <p>Worth calling out specifically, because it is a recurring pattern. Changing the bucket or key in a backend block looks like a config change. It is not.</p>
+
+        <p>If the backend <code>key</code> or <code>bucket</code> changes, Terraform looks in a different location, finds an empty state, and concludes that <em>everything must be created</em>. On the next <code>apply</code> against production, that is duplicate infrastructure, duplicate DNS records, and in the case of a database, a genuinely serious problem.</p>
+
+        <p>To rename properly, move the object in the backend first, then update the config:</p>
+
+        <pre><code>aws s3 cp s3://old-bucket/old/key s3://new-bucket/new/key
+
+# update the backend block, then:
+terraform init -migrate-state
+terraform plan   # MUST be empty of create actions before you go further</code></pre>
+
+        <p>If that plan proposes creating anything, stop. The migration did not work, and proceeding is how you get two of everything.</p>
+
+        <h2>Recovering a lost state file</h2>
+
+        <p>It will happen. In rough order of preference:</p>
+
+        <ol>
+          <li><strong>Object version history.</strong> Restore the previous version and inspect it before applying anything.</li>
+          <li><strong>Terraform Cloud or Enterprise state history.</strong> Continuous versioning, if you use it.</li>
+          <li><strong>Rebuild from providers.</strong> Every provider can enumerate its resources. Painful, but it produces a real inventory, which is more valuable than the state file anyway.</li>
+          <li><strong>Import everything.</strong> Slow, and it must be done before the next apply, not after.</li>
+        </ol>
+
+        <p>The one thing not to do is run <code>apply</code> and see what happens. That converts a state problem into an infrastructure problem, and it is very hard to undo.</p>
+
+        <h2>A short checklist</h2>
+
+        <ul>
+          <li>Remote backend with locking, from the first commit</li>
+          <li>One state file per environment, split by bounded component</li>
+          <li>Versioning on the state bucket, with a restore actually tested</li>
+          <li>Encryption at rest, and access restricted deliberately</li>
+          <li>Backend <code>key</code> includes the full path from the project root</li>
+          <li>No manual state edits &mdash; use <code>state rm</code>, <code>mv</code> and <code>import</code></li>
+          <li>Never change a backend bucket or key without <code>init -migrate-state</code></li>
+        </ul>
+      </div>
+
+      <div class="article-nav">
+        <a href="../insights/kubernetes-when.html">
+          <span class="kind">Previous</span>
+          <span class="title">Do you actually need Kubernetes?</span>
+        </a>
+        <a href="../insights/incident-first-fifteen.html">
+          <span class="kind">Next</span>
+          <span class="title">The first fifteen minutes of an incident</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-band">
+  <div class="wrap">
+    <h2>Unsure how your state is set up?</h2>
+    <p>We will review your layout, locking, backup and recovery, and tell you what would break first.</p>
+    <a class="btn btn-primary" href="../contact.html">Get in touch</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="../index.html"><span class="mark">S</span> Seevika Technologies</a>
+        <p style="margin:0;max-width:30ch">Cloud, DevOps and platform engineering for teams that need reliability.</p>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
+        <a href="../insights.html">Insights</a>
+      </div>
+      <div>
+        <h4>Services</h4>
+        <a href="../services.html#infrastructure">Infrastructure Management</a>
+        <a href="../services.html#cloud">Cloud Management</a>
+        <a href="../services.html#platform">Platform Engineering</a>
+        <a href="../services.html#advisory">Advisory</a>
+      </div>
+      <div>
+        <h4>Get in touch</h4>
+        <a href="mailto:hello@seevika.com">hello@seevika.com</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>&copy; <span id="year">2026</span> Seevika Technologies. All rights reserved.</span>
+      <span>Cloud &middot; DevOps &middot; Platform Engineering</span>
+    </div>
+  </div>
+</footer>
+
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>
