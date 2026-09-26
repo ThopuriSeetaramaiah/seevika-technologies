@@ -1,4 +1,4 @@
-# Seevika Technologies
+# Sivanvika Technologies
 
 Static company website, published via GitHub Pages.
 
@@ -9,7 +9,7 @@ Static company website, published via GitHub Pages.
 - `about.html` - About
 - `contact.html` - Contact
 - `styles.css` - All styling
-- `CNAME` - Custom domain (seevika.com)
+- `CNAME` - Custom domain (sivanvika.com)
 
 ## Local preview
 
@@ -31,15 +31,15 @@ Push to `main`. GitHub Pages publishes automatically.
 
 ## Custom domain (pending)
 
-`seevika.com` is not yet registered, so the `CNAME` file is intentionally
+`sivanvika.com` is not yet registered, so the `CNAME` file is intentionally
 absent. Without DNS configured, a `CNAME` makes GitHub Pages serve the site
 ONLY at the custom domain, which would make the `github.io` URL unreachable.
 
 To enable it once the domain is registered and DNS points at GitHub:
 
 ```bash
-printf 'seevika.com\n' > CNAME
-git add CNAME && git commit -m "Enable seevika.com custom domain" && git push
+printf 'sivanvika.com\n' > CNAME
+git add CNAME && git commit -m "Enable sivanvika.com custom domain" && git push
 ```
 
 Required DNS records for an apex domain:

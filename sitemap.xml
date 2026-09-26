@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://seevika.com/</loc><priority>1.0</priority></url>
-  <url><loc>https://seevika.com/services.html</loc><priority>0.9</priority></url>
-  <url><loc>https://seevika.com/insights.html</loc><priority>0.8</priority></url>
-  <url><loc>https://seevika.com/about.html</loc><priority>0.6</priority></url>
-  <url><loc>https://seevika.com/privacy.html</loc><priority>0.3</priority></url>
-  <url><loc>https://seevika.com/terms.html</loc><priority>0.3</priority></url>
-  <url><loc>https://seevika.com/contact.html</loc><priority>0.7</priority></url>
-  <url><loc>https://seevika.com/insights/dora-metrics.html</loc><priority>0.7</priority></url>
-  <url><loc>https://seevika.com/insights/ci-cd-maturity.html</loc><priority>0.7</priority></url>
-  <url><loc>https://seevika.com/insights/kubernetes-when.html</loc><priority>0.7</priority></url>
-  <url><loc>https://seevika.com/insights/terraform-state.html</loc><priority>0.7</priority></url>
-  <url><loc>https://seevika.com/insights/incident-first-fifteen.html</loc><priority>0.7</priority></url>
-  <url><loc>https://seevika.com/insights/shift-left-security.html</loc><priority>0.7</priority></url>
+  <url><loc>https://sivanvika.com/</loc><priority>1.0</priority></url>
+  <url><loc>https://sivanvika.com/services.html</loc><priority>0.9</priority></url>
+  <url><loc>https://sivanvika.com/insights.html</loc><priority>0.8</priority></url>
+  <url><loc>https://sivanvika.com/about.html</loc><priority>0.6</priority></url>
+  <url><loc>https://sivanvika.com/privacy.html</loc><priority>0.3</priority></url>
+  <url><loc>https://sivanvika.com/terms.html</loc><priority>0.3</priority></url>
+  <url><loc>https://sivanvika.com/contact.html</loc><priority>0.7</priority></url>
+  <url><loc>https://sivanvika.com/insights/dora-metrics.html</loc><priority>0.7</priority></url>
+  <url><loc>https://sivanvika.com/insights/ci-cd-maturity.html</loc><priority>0.7</priority></url>
+  <url><loc>https://sivanvika.com/insights/kubernetes-when.html</loc><priority>0.7</priority></url>
+  <url><loc>https://sivanvika.com/insights/terraform-state.html</loc><priority>0.7</priority></url>
+  <url><loc>https://sivanvika.com/insights/incident-first-fifteen.html</loc><priority>0.7</priority></url>
+  <url><loc>https://sivanvika.com/insights/shift-left-security.html</loc><priority>0.7</priority></url>
 </urlset>
